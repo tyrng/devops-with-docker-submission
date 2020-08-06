@@ -1,0 +1,21 @@
+version: '3.5' 
+
+services: 
+    frontend: 
+      image: ongtypc/frontend_exercise
+      build: ./frontend/
+      ports:
+        - 5000:5000
+    backend:
+      image: ongtypc/backend_exercise
+      build: ./backend
+      ports:
+        - 8000:8000
+      volumes: 
+        - ./backend/logs.txt:/usr/app/logs.txt
+      environment:
+        - REDIS=redis
+        - REDIS_PORT=6379
+    redis:
+      image: redis:6
+      restart: unless-stopped

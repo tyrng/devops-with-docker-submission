@@ -1,0 +1,39 @@
+version: '3.5' 
+
+services: 
+    frontend: 
+      image: ongtypc/frontend_exercise
+      build: ./frontend/
+      ports:
+        - 5000:5000
+    backend:
+      image: ongtypc/backend_exercise
+      build: ./backend
+      volumes: 
+        - ./backend/logs.txt:/usr/app/logs.txt
+      environment:
+        - REDIS=redis
+        - REDIS_PORT=6379
+        - DB_USERNAME=exampleUser
+        - DB_PASSWORD=example
+        - DB_NAME=postgresDb
+        - DB_HOST=postgres
+      depends_on:
+        - postgres
+        - redis
+      ports:
+        - 8000:8000
+    redis:
+      image: redis:6
+      restart: unless-stopped
+      volumes:
+        - ./cache:/data
+    postgres:
+      image: postgres:13
+      restart: unless-stopped
+      volumes:
+        - ./database:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_PASSWORD=example
+        - POSTGRES_USER=exampleUser
+        - POSTGRES_DB=postgresDb

@@ -1,0 +1,24 @@
+FROM ruby:2.6.0
+
+WORKDIR /usr/app
+COPY rails-example-project/. .
+# "**/credentials.yml.enc" is deleted so that new credentials can be created
+RUN rm config/credentials.yml.enc \
+    && bundle install \
+    && apt update \
+    && apt install -y curl apt-transport-https apt-utils \
+    && curl -sL https://deb.nodesource.com/setup_10.x | bash \
+    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt update \
+    && apt install -y nodejs yarn \
+    && apt-get purge -y --auto-remove curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && EDITOR="mate --wait" bin/rails credentials:edit \
+    && rails db:migrate RAILS_ENV=production \
+    && rake assets:precompile \
+    && useradd -m app \
+    && chown -R app .
+USER app
+EXPOSE 3000
+CMD RAILS_LOG_TO_STDOUT=true rails s -e production

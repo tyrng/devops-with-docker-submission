@@ -1,0 +1,4 @@
+echo "**/credentials.yml.enc" > .dockerignore
+git clone https://github.com/docker-hy/rails-example-project.git rails-example-project
+docker build -t rails .
+docker run -d -p 3000:3000 rails

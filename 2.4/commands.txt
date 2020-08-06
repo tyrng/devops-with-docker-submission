@@ -1,0 +1,2 @@
+cd scaling-exercise
+docker-compose up -d --scale compute=3

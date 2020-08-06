@@ -1,0 +1,2 @@
+docker build -t 3.3 .
+docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock -v ~/.docker/config.json:/root/.docker/config.json 3.3

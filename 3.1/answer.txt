@@ -1,0 +1,11 @@
+#Before Optimization
+docker image ls | grep backend_exercise
+ongtypc/backend_exercise                    latest              ebd4db16905d        3 hours ago         339MB
+docker image ls | grep frontend_exercise
+ongtypc/frontend_exercise                   latest              9291b0bba80b        3 hours ago         556MB
+
+#After Optimization
+docker image ls | grep backend_exercise
+ongtypc/backend_exercise                    latest              c3b46ec93795        23 minutes ago      310MB
+docker image ls | grep frontend_exercise
+ongtypc/frontend_exercise                   latest              8be0cddd8503        About an hour ago   489MB

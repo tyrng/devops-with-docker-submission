@@ -1,0 +1,2 @@
+docker build -t curler -f 1_Dockerfile_new .
+docker run -it --rm curler
